@@ -1,0 +1,14 @@
+Catan; 3; 4; 90
+Monopoly; 2; 6; 120
+Chess; 2; 2; 45
+Scrabble; 2; 4; 60
+Ticket to Ride; 2; 5; 75
+Pandemic; 2; 4; 45
+Carcassonne; 2; 5; 35
+Risk; 2; 6; 180
+Uno; 2; 10; 30
+Codenames; 4; 8; 15
+Dominion; 2; 4; 30
+Splendor; 2; 4; 30
+Azul; 2; 4; 45
+7 Wonders; 2; 7; 30
