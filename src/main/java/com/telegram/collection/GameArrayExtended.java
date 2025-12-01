@@ -5,8 +5,27 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+/**
+ * Розширений клас для роботи з масивом настільних ігор (ЛР9).
+ * 
+ * <p>Наслідує функціональність GameArray та додає:</p>
+ * <ul>
+ *   <li>Сортування за назвою (A-Z, Z-A)</li>
+ *   <li>Фільтрацію за регулярними виразами</li>
+ *   <li>Статистику по тривалості (мін/макс)</li>
+ * </ul>
+ * 
+ * @author Muliarchuk Serhii
+ * @version 1.0
+ * @see GameArray
+ * @see Pattern
+ */
 public class GameArrayExtended {
+    
+    /** Масив об'єктів BoardGame */
     private BoardGame[] games;
+    
+    /** Поточна кількість елементів */
     private int size;
     
     public GameArrayExtended(int capacity) {
@@ -77,16 +96,35 @@ public class GameArrayExtended {
         System.out.println("Games sorted by duration (descending)");
     }
     
+    /**
+     * Сортує ігри за назвою в алфавітному порядку (A-Z).
+     * Використовує метод порівняння String.compareTo().
+     */
     public void sortByNameAsc() {
         Arrays.sort(games, 0, size, Comparator.comparing(BoardGame::getName));
         System.out.println("Games sorted by name (A-Z)");
     }
     
+    /**
+     * Сортує ігри за назвою у зворотному алфавітному порядку (Z-A).
+     */
     public void sortByNameDesc() {
         Arrays.sort(games, 0, size, (g1, g2) -> g2.getName().compareTo(g1.getName()));
         System.out.println("Games sorted by name (Z-A)");
     }
     
+    /**
+     * Фільтрує ігри за регулярним виразом у назві.
+     * 
+     * <p>Приклади патернів:</p>
+     * <ul>
+     *   <li>{@code ^C.*} - назви, що починаються з "C"</li>
+     *   <li>{@code .*game$} - назви, що закінчуються на "game"</li>
+     *   <li>{@code .*o.*} - назви, що містять "o"</li>
+     * </ul>
+     * 
+     * @param pattern регулярний вираз для пошуку
+     */
     public void filterByNamePattern(String pattern) {
         System.out.println("\n=== Games matching pattern: " + pattern + " ===");
         int count = 0;
@@ -111,6 +149,10 @@ public class GameArrayExtended {
         }
     }
     
+    /**
+     * Виводить статистику по тривалості ігор.
+     * Показує гру з найменшою та найбільшою тривалістю.
+     */
     public void showDurationMinMax() {
         if (size == 0) {
             System.out.println("Array is empty");

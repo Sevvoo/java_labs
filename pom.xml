@@ -20,6 +20,13 @@
     </properties>
 
     <dependencies>
+        <!-- SQLite JDBC Driver -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.44.1.0</version>
+        </dependency>
+        
         <!-- JUnit для тестирования -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

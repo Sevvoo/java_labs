@@ -6,8 +6,27 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+/**
+ * Клас для роботи з масивом ігор з підтримкою файлових операцій (ЛР10).
+ * 
+ * <p>Підтримує збереження та завантаження даних з:</p>
+ * <ul>
+ *   <li>Текстових файлів (формат: Name; MinPlayers; MaxPlayers; Duration)</li>
+ *   <li>Бінарних файлів (DataInputStream/DataOutputStream)</li>
+ * </ul>
+ * 
+ * @author Muliarchuk Serhii
+ * @version 1.0
+ * @see DataInputStream
+ * @see DataOutputStream
+ * @see BufferedReader
+ */
 public class GameArrayWithFiles {
+    
+    /** Масив об'єктів BoardGame */
     private BoardGame[] games;
+    
+    /** Поточна кількість елементів */
     private int size;
     
     public GameArrayWithFiles(int capacity) {
@@ -29,6 +48,15 @@ public class GameArrayWithFiles {
         size = 10;
     }
     
+    /**
+     * Завантажує дані з текстового файлу.
+     * 
+     * <p>Формат файлу: кожен рядок містить дані гри, розділені крапкою з комою:</p>
+     * <pre>Name; MinPlayers; MaxPlayers; Duration</pre>
+     * 
+     * @param filename шлях до текстового файлу
+     * @throws FileNotFoundException якщо файл не знайдено
+     */
     public void loadFromTextFile(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             size = 0;
@@ -58,6 +86,24 @@ public class GameArrayWithFiles {
         }
     }
     
+    /**
+     * Зберігає дані у бінарний файл.
+     * 
+     * <p>Структура бінарного файлу:</p>
+     * <ol>
+     *   <li>int - кількість записів</li>
+     *   <li>Для кожного запису:
+     *     <ul>
+     *       <li>UTF String - назва гри</li>
+     *       <li>int - мінімальна кількість гравців</li>
+     *       <li>int - максимальна кількість гравців</li>
+     *       <li>int - тривалість</li>
+     *     </ul>
+     *   </li>
+     * </ol>
+     * 
+     * @param filename шлях до бінарного файлу
+     */
     public void saveToBinaryFile(String filename) {
         try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(filename))) {
             dos.writeInt(size);
@@ -76,6 +122,13 @@ public class GameArrayWithFiles {
         }
     }
     
+    /**
+     * Завантажує дані з бінарного файлу.
+     * Зчитує структуру, збережену методом {@link #saveToBinaryFile(String)}.
+     * 
+     * @param filename шлях до бінарного файлу
+     * @see #saveToBinaryFile(String)
+     */
     public void loadFromBinaryFile(String filename) {
         try (DataInputStream dis = new DataInputStream(new FileInputStream(filename))) {
             size = dis.readInt();

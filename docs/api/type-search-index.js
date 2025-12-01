@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"com.telegram.collection","l":"GameArray"},{"p":"com.telegram.collection","l":"GameArrayExtended"},{"p":"com.telegram.collection","l":"GameArrayWithFiles"},{"p":"com.telegram.database","l":"GameDatabase"},{"p":"com.telegram.gui2","l":"Module2GUI"}];updateSearchResults();

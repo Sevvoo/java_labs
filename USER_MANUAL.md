@@ -1,13 +1,23 @@
-# Laboratory Works 1-7 - User Manual
+# Laboratory Works - User Manual
 
 ## Author Information
 - Student: Muliarchuk Serhii
 - Group: KN22002b
 - Variant: 9
-- Date: November 2025
+- Date: December 2025
 
 ## Expression
 R = (cos³(y) + 2^d) / (e^x + ln(sin³(x) + 7.4))
+
+---
+
+## Project Structure
+
+### Module 1 (LR1-LR7) - GUI: MainGUI
+Basic Java programming concepts: expressions, validation, exceptions, loops, OOP basics.
+
+### Module 2 (LR8-LR11) - GUI: Module2GUI  
+Advanced topics: arrays of objects, file I/O, database operations.
 
 ---
 
@@ -16,16 +26,32 @@ R = (cos³(y) + 2^d) / (e^x + ln(sin³(x) + 7.4))
 ### What You Need
 - Java 17 or higher installed
 - Terminal or command prompt
+- SQLite JDBC driver (for LR11)
 
-### Compile the program
+### Run Module 1 GUI (LR1-LR7)
 ```bash
-javac -d target/classes src/main/java/com/telegram/gui/MainGUI.java
+run_gui.bat
 ```
-
-### Run GUI Application
+Or manually:
 ```bash
+javac -d target/classes -sourcepath src/main/java src/main/java/com/telegram/gui/MainGUI.java
 java -cp target/classes com.telegram.gui.MainGUI
 ```
+
+### Run Module 2 GUI (LR8-LR11)
+```bash
+run_module2_gui.bat
+```
+Or manually:
+```bash
+java -cp "target/classes;lib/sqlite-jdbc-3.44.1.0.jar;lib/slf4j-api-2.0.9.jar;lib/slf4j-simple-2.0.9.jar" com.telegram.gui2.Module2GUI
+```
+
+### Generate API Documentation
+```bash
+generate_javadoc.bat
+```
+Documentation will be in `docs/api/index.html`
 
 ### Run Individual Labs (console mode)
 ```bash
@@ -135,6 +161,38 @@ Added more structure:
 
 ---
 
+## Module 2 (LR8-LR11) Description
+
+### LR8: Array of Objects
+Working with arrays of BoardGame objects:
+- Display all games in table
+- Modify game properties
+- Filter by duration
+- Sort by duration or player count
+
+### LR9: Extended Array Operations
+Additional array functionality:
+- Sort by name (A-Z, Z-A)
+- Filter using regex patterns
+- Show statistics (min/max duration)
+- Filter by player count
+
+### LR10: File I/O
+Save and load data:
+- Text files (format: Name; MinPlayers; MaxPlayers; Duration)
+- Binary files (DataInputStream/DataOutputStream)
+- Load from `games.txt` sample file
+
+### LR11: Database Operations (SQLite)
+Work with SQLite database:
+- Connect to database
+- Add games to database
+- Delete games from database
+- Load games from database
+- Show table schema with constraints
+
+---
+
 ## Project Structure
 ```
 src/main/java/com/telegram/
@@ -146,6 +204,10 @@ src/main/java/com/telegram/
 ├── LR6_1.java                  - LR6 demo 1
 ├── LR6_2.java                  - LR6 demo 2
 ├── LR7.java                    - LR7
+├── LR8.java                    - LR8
+├── LR9.java                    - LR9
+├── LR10.java                   - LR10
+├── LR11.java                   - LR11
 ├── calculator/
 │   └── ExpressionCalculator.java
 ├── games/
@@ -157,9 +219,25 @@ src/main/java/com/telegram/
 │   ├── Playable.java          - interface
 │   ├── CardGame.java
 │   └── DiceGame.java
-└── gui/
-    └── MainGUI.java            - main GUI
+├── collection/
+│   ├── GameArray.java          - LR8
+│   ├── GameArrayExtended.java  - LR9
+│   └── GameArrayWithFiles.java - LR10
+├── database/
+│   └── GameDatabase.java       - LR11
+├── gui/
+│   └── MainGUI.java            - Module 1 GUI
+└── gui2/
+    └── Module2GUI.java         - Module 2 GUI
 ```
+
+---
+
+## API Documentation
+
+Generated Javadoc documentation is available at `docs/api/index.html`.
+
+Run `generate_javadoc.bat` to generate/update documentation.
 
 ---
 
@@ -179,6 +257,17 @@ src/main/java/com/telegram/
 - y = 2.0 or user input
 - d = 3.0
 
+### Database Schema (LR11)
+```sql
+CREATE TABLE board_games (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    min_players INTEGER NOT NULL CHECK(min_players > 0),
+    max_players INTEGER NOT NULL CHECK(max_players >= min_players),
+    duration INTEGER NOT NULL CHECK(duration > 0)
+)
+```
+
 ---
 
 ## If Something Goes Wrong
@@ -193,6 +282,11 @@ This happens when the math doesn't work out for the given x value. It's normal f
 - Check your Java version (needs to be 17 or newer)
 - Make sure everything is compiled
 - Run from the project root folder
+
+### Database connection error
+- Make sure SQLite JDBC driver is in `lib/` folder
+- Make sure SLF4J jars are in `lib/` folder
+- Check if `games.db` file is not locked by another process
 
 ### Class not found
 Make sure you're in the right directory and using the correct command:
